@@ -10,6 +10,6 @@
 		//}
 		
 		mysqli_close($con);
-		header("Location: admin.php");
+		header("Location: process.php");
 ?>
 	

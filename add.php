@@ -13,11 +13,17 @@ session_start();
 		$select = "INSERT INTO users (name,secondname,login,password,photo)
 				VALUES ('". $name . "','" . $secondname . "','" . $login . "','" . $password . "','" . $photo . "')"; 
 		$result = mysqli_query($con, $select);
-		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+		
+		$uploaddir = './uploads/';
+		$uploadfile = $uploaddir . basename($_FILES['uploadfile']['name']);
+		move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploadfile);
+		$select = "UPDATE users SET photo='./uploads/" . $_FILES['uploadfile']['name'] . "' WHERE login='$login' AND password='$password'";
+		$result = mysqli_query($con, $select);	
 	}
 	else{
 		echo "error";
 	}
 	mysqli_close($con);
-		header("Location: admin.php");
+		header("Location: process.php");
 	?>

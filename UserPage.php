@@ -13,9 +13,15 @@
 		<div class="container">
 			<label for="">Cabinet</label>
 			<?php
-
-				$login = $_SESSION['login'];
-				$password = $_SESSION['password'];
+				
+				if($_SESSION['login']!= "admin" && $_SESSION['password']!="admin"){
+					$login = $_SESSION['login'];
+					$password = $_SESSION['password'];
+				}
+				else{
+					$login = $_POST['login'];
+					$password = $_POST['password'];
+				}
 				
 				$con = mysqli_connect("localhost","root", "", "login"); 
 				if(isset($_POST['log'])){
@@ -27,6 +33,7 @@
 						$result = mysqli_query($con, $select);
 						$count = mysqli_num_rows($result);
 						if( $count == 0){
+							mysqli_close($con);
 							header("Location: NoUser.php");
 						}
 						else{
@@ -35,14 +42,19 @@
 						}
 					}
 					else{
+						mysqli_close($con);
 						header("Location: login.php");
 					}
 				}
 				mysqli_close($con);
 				?>
-			<form class="" action="CheckForUpdate.php" method="POST">
+			<form class="" action="CheckForUpdate.php" method="POST" enctype="multipart/form-data">
 				<input type="text" name="login" value="<?php echo $row["login"]; ?>">
 				<input type="password" name="password" value="<?php echo $row["password"]; ?>">
+				<?php
+					echo"<td>" . "<img src='" . $row['photo'] . "' ></img>" . "</td><br><br>";
+				?>
+				<input type="file" class="upload" name="uploadfile">
 				<input type="text" name="name" value="<?php echo $row["name"]; ?>">
 				<input type="text" name="secondname" value="<?php echo $row["secondname"]; ?>">
 				<input type="hidden" name="id" value="<?php echo $row["id"]; ?>">

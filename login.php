@@ -1,3 +1,8 @@
+<?php
+session_start();
+session_destroy();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<form class="" action="process.php" method="POST">
+	<form class="" action="loginProcessing.php" method="POST">
 		<div class="container">
 			<label for=""> Sign up</label>
 			<input type="text" name="login" placeholder="login" value="">

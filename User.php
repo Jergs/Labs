@@ -29,12 +29,20 @@
 				echo"<td>" . "<img src='" . $row['photo'] . "' ></img>" . "</td><br>
 				Name: $row[name] <br>
 				SecondName: $row[secondname]<br>";
+			if($login=="admin" && $password=="admin"){
+				$log = $row['login'];
+				$pass = $row['password'];
+				echo "<br>
+				<form class='' action='UserPage.php' method='POST'>
+					<input type='hidden' name='login' value='$log'>
+					<input type='hidden' name='password' value='$pass'>
+					<button type='submit' class='info_btn' name='log'>Change</button>
+				</form>";
+			}
 		}
 		?>
 
 	<form class="" action="process.php" method="POST">
-			<input type="hidden" name="login" value="<?php echo $_SESSION['login']; ?>">
-			<input type="hidden" name="password" value="<?php echo $_SESSION['password']; ?>">
 			<button type="submit" class="btn" name="log">Back</button>	
 	</form>
 </div>
