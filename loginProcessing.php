@@ -14,12 +14,14 @@ session_start();
 		$row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
 		if( $count == 0){
 			mysqli_close($con);
-			header("Location: NoUser.php");
+			//header("Location: NoUser.php");
+			echo "noUser";
 		}
 		else{
 
 			$_SESSION['login']=$_POST['login'];
 			$_SESSION['password']=$_POST['password'];
+			$_SESSION['id']=$row1['id'];
 
 			$role;
 			$select = "SELECT role FROM users WHERE login='$login' AND password='$password'";
@@ -28,11 +30,13 @@ session_start();
 			$role = $row['role'];
 			$_SESSION['role'] = $role;
 			mysqli_close($con);
-			header("Location: process.php");
+			//header("Location: index.html");
+			echo "index";
 		}
 	}
 	else{
 		mysqli_close($con);
-		header("Location: login.php");
+		echo "login";
+		//header("Location: login.php");
 	}
 ?>

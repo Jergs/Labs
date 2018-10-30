@@ -10,6 +10,6 @@
 		//}
 		
 		mysqli_close($con);
-		header("Location: process.php");
+		//header("Location: process.php");
 ?>
 	
