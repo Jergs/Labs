@@ -71,6 +71,20 @@ input{
 	
 }
 
+.change_btn{
+	width: 330px;
+	height: 40px;
+	margin-left: 90px;
+	margin-top: 15px;
+	margin-bottom:15px;
+	border-radius: 10px;
+	font-family: Georgia;
+	font-size: 21px;
+	background-color: #0ed067;
+	cursor: pointer;
+	
+}
+
 .upload{
 	width: 150px;
 	height: 20px;
@@ -94,7 +108,7 @@ input{
 	float:left;
 }
 
-.delete_btn{
+.del_btn{
 	margin-right: 5px;
 	display:inline-block;
 	border-radius: 10px;

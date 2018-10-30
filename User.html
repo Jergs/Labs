@@ -1,0 +1,49 @@
+<?php
+	session_start();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>User</title>
+	<link rel="stylesheet" type="text/css" href="style2.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		var info_id=localStorage.getItem("UserId");
+		$.post("newUser.php",{id:info_id},function(data){
+			$("#section").html(data);
+		}), "html"
+
+		$(document).on("click","#sub_btn",function(){
+			var form_d = new FormData();
+			form_d.append("uploadfile",document.getElementById("f_image").files[0]);
+			form_d.append("login",document.getElementById("f_login").value);
+			form_d.append("password",document.getElementById("f_password").value);
+			form_d.append("name",document.getElementById("f_name").value);
+			form_d.append("secondname",document.getElementById("f_secondname").value);
+			form_d.append("id",document.getElementById("f_id").value);
+			$.ajax({
+				url:"CheckForUpdate.php",
+				type:"POST",
+				data:form_d,
+				processData:false,
+				contentType:false,
+				success:function(e){
+					window.location.href = "index.html";
+				}
+			});
+		});
+	});				
+	</script>	
+</head>
+<body>
+		<div class="container">
+			<label for="">User</label>
+			<div id="section"></div>
+		<a href="Logout.php"> Log out</a>
+		</div>
+		
+</body>
+</html>
