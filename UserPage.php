@@ -50,6 +50,11 @@
 				echo '<input type="text" name="secondname" id="f_secondname" value="'.$row["secondname"].'">';
 				echo '<input type="hidden" name="id" id="f_id" value="'.$row["id"].'">';
 				echo '<button id="sub_btn" type="button" class="btn" name="log">Save</button>';
+				echo '<input type="file" id="audio_fill">';
+				echo '<video controls></video>';
+				echo '<input type="file" id="video_fill">';
+				echo '<iframe src="" allowfullscreen allow="autoplay; encrypted-media" id="youtube_frame"></iframe>';
+				echo '<input type="text" id="youtube_input">';
 				echo '</form>';
 				mysqli_close($con);
 	?>				

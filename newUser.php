@@ -30,9 +30,16 @@ session_start();
 		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 		echo "<br>
 			login: $row[login]";
-			echo"<td>" . "<img src='" . $row['photo'] . "' ></img>" . "</td><br>
-			Name: $row[name] <br>
+			echo"<td>" . "<img src='" . $row['photo'] . "' ></img>" . "</td><br>";
+			echo "Name: $row[name] <br>
 			SecondName: $row[secondname]<br>";
+			echo '<audio controls loop src="'.$row['audio'].'"></audio>';
+			if (strpos($row['video'], 'yout')){
+				echo '<iframe src="'.$row['video'].'" allowfullscreen allow="autoplay; encrypted-media" id="youtube_frame"></iframe>';
+			}
+			else{
+				echo '<video controls height="200" width="500" src="'.$row['video'].'"></video>';
+			}
 		if($id==$_SESSION['id'] || $role=="admin"){
 			echo "<button type='button' class='info_btn' id='".$row['id']."'>Change</button>";
 		}
