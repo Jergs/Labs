@@ -11,10 +11,34 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
-		$.get("newProcess.php",function(data){
+		$.get("/user/get_page",function(data){
 			$("#net").html(data);
-		}, "html"
-		);
+		}, "html");
+
+        $(document).on("click",".del_btn",function(){
+        	var del_id=$(this).attr("id");
+			$.ajax({
+				type: 'POST',
+				url:"/db/delete",
+				data:{id:del_id},
+			}).done(function(result){
+				alert(result);
+				$.get("/user/get_page",function(data){
+					$("#net").html(data);
+				}, "html"
+			);
+			});
+		});
+
+		$(document).on("click",".info_btn",function(){
+        	var info_id=$(this).attr("id");
+       		localStorage.setItem("UserId",info_id);
+       		window.location.href="User.html";
+		});
+
+		$(document).on("click","#add",function(){
+			window.location.href="addUser.html";
+		});
 	});
 	</script>	
 </head>
@@ -22,7 +46,106 @@
 		<div class="container">
 			<label for="">Table</label>
 			<div id="net"></div>
-		<a href="Logout.php"> Log out</a>
-		</div>
+			<canvas id = "canvas" width = "500" height = "30"></canvas>
+			<div>
+				<br>
+				<input type="radio" id="Red"
+			     name="color" value="1">
+			    <label for="Red">Red</label>
+			    <br>
+			    <input type="radio" id="Green"
+			     name="color" value="2">
+			    <label for="Green">Green</label>
+			    <br>
+			    <input type="radio" id="Blue"
+			     name="color" value="3">
+			    <label for="Blue">Blue</label>
+			    <br>
+ 				<input type="radio" id="Rect"
+			     name="shape" value="1">
+			    <label for="Rect">Rectangle</label>
+			    <br>
+			    <input type="radio" id="Triang"
+			     name="shape" value="2">
+			    <label for="Triang">Triangle</label>
+			    <br>
+			    <input type="radio" id="Circle"
+			     name="shape" value="3">
+			    <label for="Circle">Circle</label>
+			    <br>
+			    <input type="range" id = "rang" name = "rang" min ="0" max = "100" value="50">
+ 			<script>
+ 				var canvas = document.getElementById("canvas");
+ 				var ctx = canvas.getContext("2d");
+				ctx.lineWidth = 2;
+				var position = 0;
+				var speed = 50;
+				ctx.fillStyle = "red";
+				setTimeout("drawRect()", speed);
+ 				var shapeFlag = 1;
+ 				var rad = document.getElementsByName("color");
+				var rad2 = document.getElementsByName("shape");
+				function drawRect(){
+					for(var i = 0; i < rad.length; i++) {
+			    		rad[i].onclick = function() {
+				    		if(this.value==1){
+				    			ctx.fillStyle = "red";
+				    		}
+				    		else if(this.value==2){
+				    			ctx.fillStyle = "green";
+				    		}
+				    		else{
+				    			ctx.fillStyle = "blue";
+				    		}
+            			}
+			    	}
+ 			    	for(var i = 0; i < rad2.length; i++) {
+			    		rad2[i].onclick = function() {
+				    		if(this.value==1){
+				    			shapeFlag = 1;
+				    		}
+				    		else if(this.value==2){
+				    			shapeFlag = 2;
+				    		}
+				    		else{
+				    			shapeFlag = 3;
+				    		}
+            			}
+			    	}
+ 				    if(shapeFlag ==1){
+				    			ctx.clearRect(0,0,500,500);
+								ctx.fillRect(position,0,20,20);
+				    		}
+				    		else if(shapeFlag ==2){
+				    			ctx.clearRect(0,0,500,500);
+				    			ctx.beginPath();
+							    ctx.moveTo(position,20);
+							    ctx.lineTo(position+10,0);
+							    ctx.lineTo(position+20,20);
+							    ctx.fill();
+				    		}
+				    		else{
+				    			ctx.clearRect(0,0,500,500);
+				    			ctx.beginPath();
+								ctx.arc(position+10,10,10,0,Math.PI*2,true);
+								ctx.fill();
+								//ctx.stroke();
+				    		}
+ 					position++;
+					if(position > 500){
+						position = 0;
+					}
+				setTimeout("drawRect()",speed);
+				}
+					$(function() {
+						var el;
+						$("#rang").change(function() {
+							el = $(this);
+							speed = el.val();
+						})
+						.trigger('change');
+					});
+					
+ 		</script>
 </body>
 </html>

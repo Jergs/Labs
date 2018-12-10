@@ -11,13 +11,25 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
+		var form_d = new FormData();
 		var info_id=localStorage.getItem("UserId");
-		$.post("newUser.php",{id:info_id},function(data){
+		$.post("/user/get_user_page",{id:info_id},function(data){
 			$("#section").html(data);
 		}), "html"
 
+		$(document).on("click","#back",function(){
+			window.location.href="index.html";
+		});
+	
+		$(document).on("click",".info_btn",function(){
+        	var ch_id=$(this).attr("id");
+       		$.post("/db/change_user",{id:ch_id},function(data){
+       			$("#section").html(data);
+       		}, "html"
+       		);
+		});
+
 		$(document).on("click","#sub_btn",function(){
-			var form_d = new FormData();
 			form_d.append("uploadfile",document.getElementById("f_image").files[0]);
 			form_d.append("login",document.getElementById("f_login").value);
 			form_d.append("password",document.getElementById("f_password").value);
@@ -25,7 +37,7 @@
 			form_d.append("secondname",document.getElementById("f_secondname").value);
 			form_d.append("id",document.getElementById("f_id").value);
 			$.ajax({
-				url:"CheckForUpdate.php",
+				url:"/media/check_updates",
 				type:"POST",
 				data:form_d,
 				processData:false,
@@ -35,6 +47,21 @@
 				}
 			});
 		});
+	
+	$(document).on("keypress","#youtube_input",function(e){
+			if (e.which == 13){
+				var src = document.getElementById('youtube_input').value;
+				src = src.replace("watch?v=","embed/");
+				document.getElementById('youtube_frame').src = src;
+				form_d.append("vidosik",src);
+			}
+		})
+ 		$(document).on("change","#audio_fill",function(){
+			form_d.append("audio",document.getElementById('audio_fill').files[0]);
+		})
+ 		$(document).on("change","#video_fill",function(){
+			form_d.append("vidosik",document.getElementById('video_fill').files[0]);
+		})
 	});				
 	</script>	
 </head>
